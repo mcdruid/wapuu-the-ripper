@@ -1,0 +1,19 @@
+{
+    "name": "mcdruid/wapuu-the-ripper",
+    "description": "A password cracker for WordPress",
+    "type": "wp-cli-package",
+    "homepage": "https://github.com/mcdruid/wapuu-the-ripper",
+    "license": "MIT",
+    "authors": [],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "files": [ "command.php" ]
+    },
+    "require": {
+        "wp-cli/wp-cli": "2.4.0"
+    },
+    "require-dev": {
+        "behat/behat": "~2.5"
+    }
+}
