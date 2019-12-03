@@ -5,7 +5,7 @@ mcdruid/wapuu-the-ripper
 
 A password cracker for WordPress (WP-CLI)
 
-Quick links: [Using](#using) | [Installing](#installing)
+Quick links: [Using](#using) | [Installing](#installing) | [Credits](#credits)
 
 ## Using
 
