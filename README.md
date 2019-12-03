@@ -1,9 +1,9 @@
 mcdruid/wapuu-the-ripper
 ========================
 
-# <img src='wapuu_the_ripper.png' width='169' />
+<img src='wapuu_the_ripper.png' width='169' align="right" />
 
-A password cracker for WordPress
+A password cracker for WordPress (WP-CLI)
 
 Quick links: [Using](#using) | [Installing](#installing)
 
@@ -19,47 +19,40 @@ DESCRIPTION
 
 SYNOPSIS
 
-  wp wtr [--role=<role>] [--<field>=<value>] [--top=<top>] [--all] [--hide] [--no-guessing]
+  `wp wtr [--role=<role>] [--<field>=<value>] [--top=<top>] [--all] [--hide] [--no-guessing]`
 
-ALIAS
+  Based on [Drop the Ripper](https://www.drupal.org/project/drop_the_ripper) for Drupal.
 
-  wapuu-the-ripper
-
-  Based on https://www.drupal.org/project/drop_the_ripper
-
-  Users can be filtered via arguments supported by:
-  [WP_User_Query()][1].
+  Users can be filtered via arguments supported by
+  [WP_User_Query()](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/).
 
   Uses a default wordlist from http://www.openwall.com/wordlists
 
-  ---
-  [1] https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/
-
 OPTIONS
 
-  [--role=<role>]
+  [`--role=<role>`]
     Only display users with a certain role.
 
-  [--<field>=<value>]
+  [`--<field>=<value>`]
     Filter users by one or more arguments of WP_User_Query().
 
-  [--top=<top>]
+  [`--top=<top>`]
     Use the top x passwords from the wordlist.
 
-  [--all]
+  [`--all`]
     Use all of the passwords from the wordlist.
 
-  [--hide]
+  [`--hide`]
     Do not show plaintext passwords in output.
 
-  [--no-guessing]
+  [`--no-guessing`]
     Disables built-in password guessing (e.g. username as password).
 
 EXAMPLES
 
   wp wtr
 
-  wp wtr --top=100 --roles=administrator
+  wp wtr --top=100 --role=administrator
 
   wp wtr --all --role__not_in=subscriber
 
