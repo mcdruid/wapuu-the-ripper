@@ -2,15 +2,18 @@
 
 /**
  * Command to crack user passwords.
- * Based on https://www.drupal.org/project/drop_the_ripper
+ *
  */
 Class Wapuu_The_Ripper_Command {
 
 	/**
-	 * Try to crack user passwords
+	 * Wapuu the Ripper - a tool to crack user passwords.
+	 * Based on https://www.drupal.org/project/drop_the_ripper
 	 *
-	 * Users are filtered / selcted via arguments supported by
+	 * Users can be filtered via arguments supported by:
 	 * [WP_User_Query()](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/).
+	 *
+	 * Uses a default wordlist from http://www.openwall.com/wordlists
 	 *
 	 * ## OPTIONS
 	 *
@@ -18,7 +21,7 @@ Class Wapuu_The_Ripper_Command {
 	 * : Only display users with a certain role.
 	 *
 	 * [--<field>=<value>]
-	 * : Control output by one or more arguments of WP_User_Query().
+	 * : Filter users by one or more arguments of WP_User_Query().
 	 *
 	 * [--top=<top>]
 	 * : Use the top x passwords from the wordlist.
@@ -31,6 +34,18 @@ Class Wapuu_The_Ripper_Command {
 	 *
 	 * [--no-guessing]
 	 * : Disables built-in password guessing (e.g. username as password).
+	 *
+	 * ## EXAMPLES
+	 *
+	 * wp wtr
+	 *
+	 * wp wtr --top=100 --roles=administrator
+	 *
+	 * wp wtr --all --role__not_in=subscriber
+	 *
+	 * wp wtr --exclude=1 --hide
+	 *
+	 * @alias wapuu-the-ripper
 	 */
 	public function __invoke($args, $assoc_args) {
 		$start = microtime(TRUE);
