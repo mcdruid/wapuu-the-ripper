@@ -26,18 +26,16 @@ SYNOPSIS
   Users can be filtered via arguments supported by
   [WP_User_Query()](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/).
 
-  Uses a default wordlist from http://www.openwall.com/wordlists
-
 OPTIONS
 
   [`--role=<role>`]
-    Only display users with a certain role.
+    Only check users with a certain role.
 
   [`--<field>=<value>`]
     Filter users by one or more arguments of WP_User_Query().
 
   [`--top=<top>`]
-    Use the top x passwords from the wordlist.
+    Use the top x passwords from the wordlist (default is 25).
 
   [`--all`]
     Use all of the passwords from the wordlist.
@@ -65,3 +63,7 @@ You can install this package with:
 
     wp package install git@github.com:mcdruid/wapuu-the-ripper.git
 
+## Credits
+
+* WtR uses a default wordlist from http://www.openwall.com/wordlists
+* https://ayesh.me/ for suggesting the name!
