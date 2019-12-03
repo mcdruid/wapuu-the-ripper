@@ -33,7 +33,7 @@ Class Wapuu_The_Ripper_Command {
 	 * : Disables built-in password guessing (e.g. username as password).
 	 */
 	public function __invoke($args, $assoc_args) {
-
+		$start = microtime(TRUE);
 		$users = get_users($assoc_args);
 
 		// @todo: allow custom wordlists.
@@ -72,11 +72,14 @@ Class Wapuu_The_Ripper_Command {
 			}
 		}
 
+		$finish = microtime(TRUE);
+		$time_taken = sprintf('%.2f', $finish - $start);
+		$output = "Ran $pw_checks checks for $user_checks users in $time_taken seconds.";
 		if (empty($matches)) {
-			WP_CLI::success('Ran ' . $pw_checks . ' checks for ' . $user_checks . ' users. No matches.');
+			WP_CLI::success($output . ' No matches.');
 		}
 		else {
-			WP_CLI::success('Ran ' . $pw_checks . ' checks for ' . $user_checks . ' users. ' . count($matches) . ' match(es).');
+			WP_CLI::success($output . ' ' . count($matches) . ' match(es).');
 		}
 	}
 
