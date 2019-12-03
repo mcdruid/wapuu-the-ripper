@@ -46,6 +46,9 @@ OPTIONS
   [`--no-guessing`]
     Disables built-in password guessing (e.g. username as password).
 
+  [`--wordlist=<wordlist>`]
+    Path to a custom wordlist (default is openwall's password list).
+
 EXAMPLES
 
   wp wtr
@@ -56,6 +59,7 @@ EXAMPLES
 
   wp wtr --exclude=1 --hide
 
+  wp wrt --wordlist=/tmp/rockyou.txt --include=2,3,4
 
 ## Installing
 

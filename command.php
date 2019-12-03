@@ -47,6 +47,8 @@ Class Wapuu_The_Ripper_Command {
 	 *
 	 * wp wtr --exclude=1 --hide
 	 *
+	 * wp wrt --wordlist=/tmp/rockyou.txt --include=2,3,4
+	 *
 	 * @alias wapuu-the-ripper
 	 */
 	public function __invoke($args, $assoc_args) {
