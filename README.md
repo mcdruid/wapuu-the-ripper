@@ -19,7 +19,7 @@ DESCRIPTION
 
 SYNOPSIS
 
-  wp wtr [--role=<role>] [--<field>=<value>] [--top=<top>] [--all] [--hide] [--no-guessing]
+  `wp wtr [--role=<role>] [--<field>=<value>] [--top=<top>] [--all] [--hide] [--no-guessing]`
 
   Based on [Drop the Ripper](https://www.drupal.org/project/drop_the_ripper) for Drupal.
 
@@ -30,22 +30,22 @@ SYNOPSIS
 
 OPTIONS
 
-  [--role=<role>]
+  [`--role=<role>`]
     Only display users with a certain role.
 
-  [--`<field>=<value>`]
+  [`--<field>=<value>`]
     Filter users by one or more arguments of WP_User_Query().
 
-  [--top=<top>]
+  [`--top=<top>`]
     Use the top x passwords from the wordlist.
 
-  [--all]
+  [`--all`]
     Use all of the passwords from the wordlist.
 
-  [--hide]
+  [`--hide`]
     Do not show plaintext passwords in output.
 
-  [--no-guessing]
+  [`--no-guessing`]
     Disables built-in password guessing (e.g. username as password).
 
 EXAMPLES
