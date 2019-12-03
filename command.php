@@ -17,37 +17,66 @@ Class Wapuu_The_Ripper_Command {
 	 * [--role=<role>]
 	 * : Only display users with a certain role.
 	 *
+	 * [--<field>=<value>]
+	 * : Control output by one or more arguments of WP_User_Query().
+	 *
 	 * [--top=<top>]
 	 * : Use the top x passwords from the wordlist.
 	 *
 	 * [--all]
 	 * : Use all of the passwords from the wordlist.
+	 *
+	 * [--hide]
+	 * : Do not show plaintext passwords in output.
+	 *
+	 * [--no-guessing]
+	 * : Disables built-in password guessing (e.g. username as password).
 	 */
 	public function __invoke($args, $assoc_args) {
 
 		$users = get_users($assoc_args);
 
+		// @todo: allow custom wordlists.
 		$wordlist = __DIR__ . '/wordlist.txt';
 		$passwords = $this->wtr_load_wordlist($wordlist, $assoc_args);
 		$matches = [];
-		$checked = 0;
+		$user_checks = 0;
+		$pw_checks = 0;
 
 		foreach ($users as $user) {
-			$checked++;
+			$user_checks++;
+			if (!isset($assoc_array['no-guessing'])) {
+				$guesses = $this->wtr_user_guesses($user);
+				foreach ($guesses as $guess) {
+					$pw_checks++;
+					if (wp_check_password($guess, $user->data->user_pass, $user->ID)) {
+						$matches[] = $user;
+						if (isset($assoc_args['hide'])) {
+							$guess = '*****';
+						}
+						WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' status=' . $user->data->user_status . ' password=' . $guess);
+						continue 2; // No need to try passwords for this user.
+					}
+				}
+			}
 			foreach ($passwords as $password) {
+				$pw_checks++;
 				if (wp_check_password($password, $user->data->user_pass, $user->ID)) {
 					$matches[] = $user;
-					WP_CLI::warning('Match! ' . $user->ID . ': ' . $user->data->user_login . ' password: ' . $password);
-					continue;
+					if (isset($assoc_args['hide'])) {
+						$password = '*****';
+					}
+					WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' status=' . $user->data->user_status . ' password=' . $password);
+					break;
 				}
 			}
 		}
 
 		if (empty($matches)) {
-			WP_CLI::success('Checked ' . $checked . ' users. No matches.');
+			WP_CLI::success('Ran ' . $pw_checks . ' checks for ' . $user_checks . ' users. No matches.');
 		}
 		else {
-			WP_CLI::success('Checked ' . $checked . ' users. ' . count($matches) . ' match(es).');
+			WP_CLI::success('Ran ' . $pw_checks . ' checks for ' . $user_checks . ' users. ' . count($matches) . ' match(es).');
 		}
 	}
 
@@ -106,7 +135,30 @@ Class Wapuu_The_Ripper_Command {
 		return rtrim($line, "\r\n");
 	}
 
+	/**
+	 * Make a few guesses about a user's password.
+	 *
+	 * @param object $user
+	 *   A  user object.
+	 *
+	 * @return array
+	 *   Guesses at the user's password.
+	 */
+	private function wtr_user_guesses($user) {
+		$guesses = [];
+		$guesses[] = $user->user_login;
+		$guesses[] = $user->user_login . date('Y');
+		$guesses[] = $user->user_nicename;
+		$guesses[] = $user->display_name;
+		$guesses[] = $user->user_email;
+		if (preg_match('/(.*)@(.*)\..*/', $user->user_email, $matches)) {
+			$guesses[] = $matches[1]; // Username portion of mail.
+			$guesses[] = $matches[2]; // First part of domain.
+		}
+		return array_unique(array_filter($guesses));
+	}
+
 }
 
 WP_CLI::add_command('wtr', 'Wapuu_The_Ripper_Command'); // Struggling with @alias
-WP_CLI::add_command('wapuu_the_ripper', 'Wapuu_The_Ripper_Command');
+//WP_CLI::add_command('wapuu_the_ripper', 'Wapuu_The_Ripper_Command');
