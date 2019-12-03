@@ -2,7 +2,6 @@
 
 /**
  * Command to crack user passwords.
- *
  */
 Class Wapuu_The_Ripper_Command {
 
@@ -35,6 +34,9 @@ Class Wapuu_The_Ripper_Command {
 	 * [--no-guessing]
 	 * : Disables built-in password guessing (e.g. username as password).
 	 *
+	 * [--wordlist=<wordlist>]
+	 * : Path to a custom wordlist (default is openwall's password list).
+	 *
 	 * ## EXAMPLES
 	 *
 	 * wp wtr
@@ -51,8 +53,15 @@ Class Wapuu_The_Ripper_Command {
 		$start = microtime(TRUE);
 		$users = get_users($assoc_args);
 
-		// @todo: allow custom wordlists.
 		$wordlist = __DIR__ . '/wordlist.txt';
+		if (isset($assoc_args['wordlist'])) {
+			if (file_exists($assoc_args['wordlist'])) {
+				$wordlist = $assoc_args['wordlist'];
+			}
+			else {
+				WP_CLI::warning('Custom wordlist not found; using default.');
+			}
+		}
 		$passwords = $this->wtr_load_wordlist($wordlist, $assoc_args);
 		$matches = [];
 		$user_checks = 0;
@@ -69,7 +78,7 @@ Class Wapuu_The_Ripper_Command {
 						if (isset($assoc_args['hide'])) {
 							$guess = '*****';
 						}
-						WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' password=' . $guess);
+						WP_CLI::log(sprintf('Match: ID=%s login=%s password=%s',  $user->ID ,$user->data->user_login, $guess));
 						continue 2; // No need to try passwords for this user.
 					}
 				}
@@ -81,7 +90,7 @@ Class Wapuu_The_Ripper_Command {
 					if (isset($assoc_args['hide'])) {
 						$password = '*****';
 					}
-					WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' password=' . $password);
+					WP_CLI::log(sprintf('Match: ID=%s login=%s password=%s',  $user->ID ,$user->data->user_login, $password));
 					break;
 				}
 			}
@@ -89,7 +98,7 @@ Class Wapuu_The_Ripper_Command {
 
 		$finish = microtime(TRUE);
 		$time_taken = sprintf('%.2f', $finish - $start);
-		$output = "Ran $pw_checks checks for $user_checks users in $time_taken seconds.";
+		$output = sprintf('Ran %s checks for %s users in %s seconds.', $pw_checks, $user_checks, $time_taken);
 		if (empty($matches)) {
 			WP_CLI::success($output . ' No matches.');
 		}
@@ -178,5 +187,4 @@ Class Wapuu_The_Ripper_Command {
 
 }
 
-WP_CLI::add_command('wtr', 'Wapuu_The_Ripper_Command'); // Struggling with @alias
-//WP_CLI::add_command('wapuu_the_ripper', 'Wapuu_The_Ripper_Command');
+WP_CLI::add_command('wtr', 'Wapuu_The_Ripper_Command');
