@@ -33,7 +33,7 @@ OPTIONS
   [--role=<role>]
     Only display users with a certain role.
 
-  [--<field>=<value>]
+  [--`<field>=<value>`]
     Filter users by one or more arguments of WP_User_Query().
 
   [--top=<top>]
@@ -52,7 +52,7 @@ EXAMPLES
 
   wp wtr
 
-  wp wtr --top=100 --roles=administrator
+  wp wtr --top=100 --role=administrator
 
   wp wtr --all --role__not_in=subscriber
 
