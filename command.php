@@ -69,7 +69,7 @@ Class Wapuu_The_Ripper_Command {
 						if (isset($assoc_args['hide'])) {
 							$guess = '*****';
 						}
-						WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' status=' . $user->data->user_status . ' password=' . $guess);
+						WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' password=' . $guess);
 						continue 2; // No need to try passwords for this user.
 					}
 				}
@@ -81,7 +81,7 @@ Class Wapuu_The_Ripper_Command {
 					if (isset($assoc_args['hide'])) {
 						$password = '*****';
 					}
-					WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' status=' . $user->data->user_status . ' password=' . $password);
+					WP_CLI::warning('Match: ID=' . $user->ID . ' login=' . $user->data->user_login . ' password=' . $password);
 					break;
 				}
 			}
