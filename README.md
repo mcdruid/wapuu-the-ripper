@@ -23,7 +23,7 @@ SYNOPSIS
 
   Based on [Drop the Ripper](https://www.drupal.org/project/drop_the_ripper) for Drupal.
 
-  Users can be filtered via arguments supported by:
+  Users can be filtered via arguments supported by
   [WP_User_Query()](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/).
 
   Uses a default wordlist from http://www.openwall.com/wordlists
