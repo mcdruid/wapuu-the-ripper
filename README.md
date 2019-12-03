@@ -1,9 +1,9 @@
 mcdruid/wapuu-the-ripper
 ========================
 
-# <img src='wapuu_the_ripper.png' width='169' />
+<img src='wapuu_the_ripper.png' width='169' align="right" />
 
-A password cracker for WordPress
+A password cracker for WordPress (WP-CLI)
 
 Quick links: [Using](#using) | [Installing](#installing)
 
@@ -21,19 +21,12 @@ SYNOPSIS
 
   wp wtr [--role=<role>] [--<field>=<value>] [--top=<top>] [--all] [--hide] [--no-guessing]
 
-ALIAS
-
-  wapuu-the-ripper
-
-  Based on https://www.drupal.org/project/drop_the_ripper
+  Based on [Drop the Ripper](https://www.drupal.org/project/drop_the_ripper) for Drupal.
 
   Users can be filtered via arguments supported by:
-  [WP_User_Query()][1].
+  [WP_User_Query()](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/).
 
   Uses a default wordlist from http://www.openwall.com/wordlists
-
-  ---
-  [1] https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/
 
 OPTIONS
 
